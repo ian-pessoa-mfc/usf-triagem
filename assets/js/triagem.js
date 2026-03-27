@@ -1,146 +1,145 @@
-// triagem.js - Sistema de Triagem Atualizado
+// ========== triagem.js CORRIGIDO E FUNCIONAL ==========
 
-// Elementos do DOM
-const nomeInput = document.getElementById('nome');
-const idadeInput = document.getElementById('idade');
-const queixaSelect = document.getElementById('queixa');
-const sinaisVitaisInputs = {
-    pressao: document.getElementById('pressao'),
-    frequencia_cardiaca: document.getElementById('frequencia_cardiaca'),
-    frequencia_respiratoria: document.getElementById('frequencia_respiratoria'),
-    temperatura: document.getElementById('temperatura'),
-    saturacao: document.getElementById('saturacao'),
-    glasgow: document.getElementById('glasgow')
-};
-const chkSinais = document.querySelectorAll('.chk-sinal');
-const chkRiscos = document.querySelectorAll('.chk-risco');
-const resultadoDiv = document.getElementById('resultado');
-const salvarBtn = document.getElementById('salvar');
-const triagensList = document.getElementById('triagens-list'); // Para triagens.html
+// Campos principais
+const nomeInput = document.getElementById("nome");
+const idadeInput = document.getElementById("idade");
+const queixaSelect = document.getElementById("queixa");
 
-// Emergências diretas baseadas na queixa
-const emergenciasDiretas = ['convulsao', 'dor_toracica_intensa', 'hemorragia_grave', 'choque', 'parada_cardiaca'];
+// Sinais vitais
+const temperaturaInput = document.getElementById("temperatura");
+const pressaoInput = document.getElementById("pressao");
+const saturacaoInput = document.getElementById("saturacao");
+const batimentosInput = document.getElementById("batimentos");
 
-// Função para detectar emergência direta
-function detectarEmergenciaDireta(queixa) {
-    return emergenciasDiretas.includes(queixa);
-}
+// Resultado
+const resultadoDiv = document.getElementById("resultadoTriagem");
 
-// Função para ler sinais vitais
+// Emergências diretas
+const emergenciasDiretas = [
+    "convulsao",
+    "dor_toracica_intensa",
+    "dispneia_grave",
+    "hemorragia_ativa",
+    "inconsciencia",
+    "suspeita_avc",
+    "anafilaxia",
+    "abdominal_agudo",
+    "trauma_grave"
+];
+
+// ========== FUNÇÕES ==========
 function lerSinaisVitais() {
     return {
-        pressao: sinaisVitaisInputs.pressao.value,
-        frequencia_cardiaca: sinaisVitaisInputs.frequencia_cardiaca.value,
-        frequencia_respiratoria: sinaisVitaisInputs.frequencia_respiratoria.value,
-        temperatura: sinaisVitaisInputs.temperatura.value,
-        saturacao: sinaisVitaisInputs.saturacao.value,
-        glasgow: sinaisVitaisInputs.glasgow.value
+        temperatura: parseFloat(temperaturaInput.value),
+        pressao: pressaoInput.value,
+        saturacao: parseFloat(saturacaoInput.value),
+        batimentos: parseInt(batimentosInput.value)
     };
 }
 
-// Função para ler checkboxes visíveis
-function lerCheckboxes(selector) {
-    const checkboxes = document.querySelectorAll(selector);
+function lerCheckboxesSeVisivel(selector) {
+    const itens = document.querySelectorAll(selector);
     const selecionados = [];
-    checkboxes.forEach(chk => {
-        if (chk.checked && chk.offsetParent !== null) { // Verifica se está visível
-            selecionados.push(chk.id);
+
+    itens.forEach(chk => {
+        if (chk.checked && chk.offsetParent !== null) {
+            selecionados.push(chk.value);
         }
     });
+
     return selecionados;
 }
 
-// Algoritmo avançado (assumindo funções já existentes ou implementadas)
-function detectarEmergencia(sinais, checklist, risco) {
-    // Lógica para detectar emergência baseada em sinais, checklist e risco
-    // Exemplo simplificado: se sinais vitais anômalos ou checklist alta
-    if (sinais.glasgow < 15 || sinais.pressao < 90 || checklist.length > 3) {
-        return true;
-    }
+function detectarEmergenciaAvancada(sinais, checklist, fatores) {
+    if (sinais.saturacao < 92) return true;
+    if (sinais.batimentos > 140 || sinais.batimentos < 50) return true;
+    if (sinais.temperatura >= 40) return true;
+    if (fatores.includes("idoso") && checklist.length >= 3) return true;
+
     return false;
 }
 
-function calcularScoreChecklist(checklist) {
-    // Score baseado no número de sintomas
-    return checklist.length;
-}
-
-function calcularScoreRisco(risco) {
-    // Score baseado em fatores de risco
-    return risco.length * 2;
-}
-
-function avaliarSinaisVitais(sinais) {
-    // Avaliação de sinais vitais
+function calcularPrioridade(sinais, checklist, fatores) {
     let score = 0;
-    if (sinais.frequencia_cardiaca > 100) score += 1;
-    if (sinais.temperatura > 38) score += 1;
-    // Adicionar mais lógica
-    return score;
+
+    if (sinais.saturacao < 95) score++;
+    if (sinais.temperatura >= 38.5) score++;
+    if (checklist.length >= 2) score++;
+    if (fatores.includes("idoso")) score++;
+    if (fatores.includes("gestante")) score++;
+
+    if (score >= 4) return "LARANJA";
+    if (score >= 2) return "AMARELO";
+    return "VERDE";
 }
 
-function definirPrioridade(emergencia, scoreChecklist, scoreRisco, scoreSinais) {
-    if (emergencia) return 'VERMELHO';
-    const total = scoreChecklist + scoreRisco + scoreSinais;
-    if (total >= 5) return 'LARANJA';
-    if (total >= 3) return 'AMARELO';
-    return 'VERDE';
+function mostrarResultado(prioridade) {
+    resultadoDiv.innerHTML =
+        `<h2 style="padding:15px;border-radius:8px;background:${
+            prioridade === "VERMELHO" ? "#d9534f" :
+            prioridade === "LARANJA" ? "#f0ad4e" :
+            prioridade === "AMARELO" ? "#ffd500" :
+            "#5cb85c"
+        }; color:white; text-align:center">
+            PRIORIDADE: ${prioridade}
+        </h2>`;
 }
 
-// Função principal de triagem
-function realizarTriagem() {
-    const nome = nomeInput.value;
+function salvarTriagem(dados) {
+    const triagens = JSON.parse(localStorage.getItem("triagens")) || [];
+    triagens.push({ ...dados, timestamp: new Date().toLocaleString() });
+    localStorage.setItem("triagens", JSON.stringify(triagens));
+}
+
+function realizarTriagem(event) {
+    event.preventDefault();
+
+    const nome = nomeInput.value.trim();
     const idade = idadeInput.value;
     const queixa = queixaSelect.value;
-    const sinais = lerSinaisVitais();
-    const checklist = lerCheckboxes('.chk-sinal');
-    const risco = lerCheckboxes('.chk-risco');
 
-    // Verificar emergência direta
-    if (detectarEmergenciaDireta(queixa)) {
-        const prioridade = 'VERMELHO';
-        mostrarResultado(prioridade);
-        salvarTriagem({ nome, idade, queixa, sinais, checklist, risco, prioridade });
+    const sinais = lerSinaisVitais();
+    const checklist = lerCheckboxesSeVisivel(".chk-sinal");
+    const fatores = lerCheckboxesSeVisivel(".chk-risco");
+
+    // Emergência direta
+    if (emergenciasDiretas.includes(queixa)) {
+        mostrarResultado("VERMELHO");
+        salvarTriagem({ nome, idade, queixa, sinais, checklist, fatores, prioridade: "VERMELHO" });
         return;
     }
 
-    // Usar algoritmo avançado
-    const emergencia = detectarEmergencia(sinais, checklist, risco);
-    const scoreChecklist = calcularScoreChecklist(checklist);
-    const scoreRisco = calcularScoreRisco(risco);
-    const scoreSinais = avaliarSinaisVitais(sinais);
-    const prioridade = definirPrioridade(emergencia, scoreChecklist, scoreRisco, scoreSinais);
+    // Emergência avançada
+    if (detectarEmergenciaAvancada(sinais, checklist, fatores)) {
+        mostrarResultado("LARANJA");
+        salvarTriagem({ nome, idade, queixa, sinais, checklist, fatores, prioridade: "LARANJA" });
+        return;
+    }
 
+    // Prioridade geral
+    const prioridade = calcularPrioridade(sinais, checklist, fatores);
     mostrarResultado(prioridade);
-    salvarTriagem({ nome, idade, queixa, sinais, checklist, risco, prioridade });
+
+    salvarTriagem({ nome, idade, queixa, sinais, checklist, fatores, prioridade });
 }
 
-// Função para mostrar resultado
-function mostrarResultado(prioridade) {
-    resultadoDiv.innerHTML = `<h2>Prioridade: ${prioridade}</h2>`;
-}
+document.getElementById("formTriagem").addEventListener("submit", realizarTriagem);
 
-// Função para salvar no localStorage
-function salvarTriagem(triagem) {
-    const triagens = JSON.parse(localStorage.getItem('triagens')) || [];
-    triagens.push({ ...triagem, timestamp: new Date().toISOString() });
-    localStorage.setItem('triagens', JSON.stringify(triagens));
-}
-
-// Função para carregar triagens (para triagens.html)
+// ========== CARREGAR TRIAGENS NA OUTRA PÁGINA ==========
 function carregarTriagens() {
-    if (!triagensList) return; // Só executa se estiver na página triagens.html
-    const triagens = JSON.parse(localStorage.getItem('triagens')) || [];
-    triagensList.innerHTML = '';
+    const lista = document.getElementById("triagens-list");
+    if (!lista) return;
+
+    const triagens = JSON.parse(localStorage.getItem("triagens")) || [];
+
     triagens.forEach(t => {
-        const li = document.createElement('li');
-        li.textContent = `${t.nome} - ${t.prioridade} - ${t.timestamp}`;
-        triagensList.appendChild(li);
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <strong>${t.nome}</strong> — ${t.prioridade}<br>
+            <small>${t.timestamp}</small>
+        `;
+        lista.appendChild(li);
     });
 }
 
-// Event listeners
-salvarBtn.addEventListener('click', realizarTriagem);
-
-// Carregar triagens ao carregar a página
-document.addEventListener('DOMContentLoaded', carregarTriagens);
+document.addEventListener("DOMContentLoaded", carregarTriagens);
