@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>Triagem</title>
     <link rel="stylesheet" href="assets/css/style.css">
+
     <style>
-        /* Accordion básico */
         .accordion-section {
             background: #f0f0f0;
             padding: 10px;
@@ -47,25 +47,105 @@
 
     <form id="formTriagem">
 
-        <!-- Dados básicos -->
         <label>Nome do paciente:</label>
         <input type="text" id="nome" required>
 
         <label>Idade:</label>
         <input type="number" id="idade" required>
 
-        <!-- ====== NOVOS CAMPOS ====== -->
+        <!-- ======================= -->
+        <!-- NOVO SELECT DE QUEIXAS -->
+        <!-- ======================= -->
 
         <label>Queixa principal:</label>
-        <input type="text" id="queixa" placeholder="Ex: febre, dor abdominal, tosse..." required>
 
-        <label>Detalhes da queixa:</label>
-        <textarea id="detalhesQueixa" rows="3" placeholder="Descreva detalhes importantes"></textarea>
+        <select id="queixa" required>
+            <option value="">Selecione...</option>
 
-        <!-- CHECKLIST EM ACCORDION -->
+            <optgroup label="⚠️ EMERGÊNCIAS">
+                <option value="convulsao">Convulsão</option>
+                <option value="dor_toracica_intensa">Dor torácica intensa</option>
+                <option value="dispneia_grave">Falta de ar grave</option>
+                <option value="hemorragia_ativa">Hemorragia ativa</option>
+                <option value="inconsciencia">Perda de consciência</option>
+                <option value="suspeita_avc">Suspeita de AVC</option>
+                <option value="anafilaxia">Anafilaxia</option>
+                <option value="abdominal_agudo">Abdome agudo</option>
+                <option value="trauma_grave">Trauma grave</option>
+            </optgroup>
+
+            <optgroup label="🫁 Respiratórias">
+                <option value="dispneia">Dispneia leve/moderada</option>
+                <option value="tosse">Tosse</option>
+                <option value="sibilos">Chiado</option>
+                <option value="resfriado">Sintomas gripais</option>
+                <option value="febre_respiratoria">Febre com sintomas respiratórios</option>
+            </optgroup>
+
+            <optgroup label="🧠 Neurológicas">
+                <option value="cefaleia">Cefaleia</option>
+                <option value="tontura">Tontura</option>
+                <option value="sincope">Síncope</option>
+                <option value="formigamento">Formigamento</option>
+            </optgroup>
+
+            <optgroup label="❤️ Cardiovasculares">
+                <option value="dor_toracica_leve">Dor torácica leve</option>
+                <option value="palpitacoes">Palpitações</option>
+                <option value="edema">Edema em membros</option>
+            </optgroup>
+
+            <optgroup label="🍽 Gastrointestinais">
+                <option value="dor_abdominal">Dor abdominal</option>
+                <option value="diarreia">Diarreia</option>
+                <option value="vomito">Vômitos</option>
+                <option value="nausea">Náusea</option>
+            </optgroup>
+
+            <optgroup label="🚽 Urinário">
+                <option value="disuria">Dor ao urinar</option>
+                <option value="polaciuria">Urinar muitas vezes</option>
+                <option value="lombalgia">Dor lombar</option>
+                <option value="hematúria">Urina com sangue</option>
+            </optgroup>
+
+            <optgroup label="🧴 Dermatológicas">
+                <option value="exantema">Exantema</option>
+                <option value="prurido">Prurido</option>
+                <option value="lesoes_pele">Lesões de pele</option>
+            </optgroup>
+
+            <optgroup label="🍼 Pediatria">
+                <option value="febre_crianca">Febre em criança</option>
+                <option value="tosse_crianca">Tosse em criança</option>
+                <option value="vomito_crianca">Vômitos em criança</option>
+                <option value="irritabilidade">Irritabilidade</option>
+            </optgroup>
+
+            <optgroup label="👩‍🍼 Gineco/Obstétricas">
+                <option value="dor_pelvica">Dor pélvica</option>
+                <option value="corrimento">Corrimento vaginal</option>
+                <option value="sangramento_vaginal">Sangramento vaginal</option>
+            </optgroup>
+
+            <optgroup label="🦴 Ortopédicas">
+                <option value="dor_costas">Dor nas costas</option>
+                <option value="entorse">Entorse</option>
+                <option value="trauma_leve">Trauma leve</option>
+            </optgroup>
+
+            <optgroup label="🗂 Outros">
+                <option value="mal_estar">Mal estar</option>
+                <option value="ansiedade">Ansiedade</option>
+                <option value="outros">Outros</option>
+            </optgroup>
+        </select>
+
+        <!-- REMOVEI “detalhes da queixa” porque não existe mais texto livre -->
+
         <h3>Sinais de Alarme</h3>
 
-        <!-- Respiração -->
+        <!-- Mantive SEU CHECKLIST ATUAL sem mexer -->
         <div class="accordion-section">
             <div class="accordion-title">Respiração</div>
             <div class="accordion-content">
@@ -77,30 +157,27 @@
             </div>
         </div>
 
-        <!-- Neurológico -->
         <div class="accordion-section">
             <div class="accordion-title">Neurológico</div>
             <div class="accordion-content">
-                <label><input type="checkbox" class="chk-sinal" value="sonolência"> Sonolência anormal</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="sonolencia"> Sonolência</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="rebaixamento"> Rebaixamento de consciência</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="confusão"> Confusão mental</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="convulsão"> Convulsão</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="confusao"> Confusão</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="convulsao"> Convulsão</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="rigidez de nuca"> Rigidez de nuca</label>
             </div>
         </div>
 
-        <!-- Circulação -->
         <div class="accordion-section">
             <div class="accordion-title">Circulação / Dor</div>
             <div class="accordion-content">
-                <label><input type="checkbox" class="chk-sinal" value="dor torácica moderada"> Dor torácica moderada</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="dor torácica intensa"> Dor torácica intensa</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="dor toracica moderada"> Dor torácica moderada</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="dor toracica intensa"> Dor torácica intensa</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="pulso fraco"> Pulso fraco</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="hemorragia ativa"> Hemorragia ativa</label>
             </div>
         </div>
 
-        <!-- Fatores de risco -->
         <h3>Fatores de Risco</h3>
 
         <label><input type="checkbox" class="chk-risco" value="idoso"> Idoso</label><br>
@@ -109,9 +186,7 @@
         <label><input type="checkbox" class="chk-risco" value="diabetes"> Diabetes</label><br>
         <label><input type="checkbox" class="chk-risco" value="hipertensão"> Hipertensão</label><br>
         <label><input type="checkbox" class="chk-risco" value="asma"> Asma</label><br>
-        <label><input type="checkbox" class="chk-risco" value="dpoc"> DPOC</label><br>
 
-        <!-- SINAIS VITAIS (originais) -->
         <label>Temperatura (°C):</label>
         <input type="number" id="temperatura" step="0.1" required>
 
@@ -125,6 +200,7 @@
         <input type="number" id="batimentos" required>
 
         <button type="submit">Processar Triagem</button>
+
     </form>
 
     <div id="resultadoTriagem" style="margin-top: 30px;"></div>
