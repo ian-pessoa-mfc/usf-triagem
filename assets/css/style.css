@@ -1,112 +1,183 @@
-/* Estilo geral */
-body {
+/* ===========================
+   RESET E BASE
+=========================== */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
-    background: #f7f7f7;
-    color: #222;
 }
 
-/* Cabeçalho */
+body {
+    background: #f4f6f9;
+    color: #333;
+    padding-bottom: 60px;
+}
+
+/* ===========================
+   HEADER
+=========================== */
 header {
     background: #004aad;
     color: white;
-    padding: 20px;
+    padding: 20px 0;
     text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
 }
 
-/* Menu */
-nav {
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+header h1 {
+    font-size: 26px;
+    margin-bottom: 10px;
 }
 
-nav a {
-    background: #ffffff22;
-    padding: 10px 18px;
-    border-radius: 10px;
+header nav a {
     color: white;
+    margin: 0 15px;
+    font-weight: bold;
     text-decoration: none;
-    font-weight: 600;
-    border: 1px solid #ffffff44;
-    backdrop-filter: blur(6px);
-    transition: 0.2s;
 }
 
-nav a:hover {
-    background: #ffffff44;
-    transform: scale(1.05);
+header nav a:hover {
+    text-decoration: underline;
 }
 
-/* Área principal */
+/* ===========================
+   FORMULÁRIO
+=========================== */
 main {
-    margin-top: 40px;
-    text-align: center;
-    font-size: 18px;
-}
-
-/* Formulário de triagem */
-form {
-    max-width: 500px;
+    width: 90%;
+    max-width: 700px;
     margin: auto;
     background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #00000022;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
 }
 
-label {
+main h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+form label {
     font-weight: bold;
+    margin-top: 15px;
+    display: block;
 }
 
-input, select {
+form input, form textarea {
     width: 100%;
     padding: 10px;
     margin-top: 6px;
-    margin-bottom: 16px;
+    border: 1px solid #bbb;
     border-radius: 6px;
-    border: 1px solid #ccc;
+    font-size: 15px;
+    background: #fafafa;
 }
 
-/* Botão */
+form input:focus, form textarea:focus {
+    border-color: #004aad;
+    outline: none;
+    background: #fff;
+}
+
 button {
     width: 100%;
+    padding: 14px;
+    margin-top: 22px;
     background: #004aad;
     color: white;
+    font-size: 17px;
+    border-radius: 8px;
     border: none;
-    padding: 12px;
-    border-radius: 6px;
-    font-size: 16px;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 button:hover {
-    background: #003b8a;
+    background: #00337a;
 }
 
-/* Cartões de triagens */
+/* ===========================
+   RESULTADO DA TRIAGEM
+=========================== */
+#resultadoTriagem {
+    margin-top: 25px;
+    padding: 20px;
+    background: #e8f1ff;
+    border-left: 6px solid #004aad;
+    border-radius: 8px;
+}
+
+/* ===========================
+   CARDS DA LISTA (triagens.html)
+=========================== */
 .card {
     background: white;
-    padding: 15px;
-    margin: 15px auto;
-    max-width: 500px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #00000022;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    border-left: 10px solid #004aad;
 }
 
 .card h3 {
-    margin-top: 0;
+    margin-bottom: 10px;
+    color: #004aad;
 }
 
-/* Alerta de emergência */
-.emergencia {
-    background: #ff4b4b;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    font-weight: bold;
+/* ===========================
+   BUTTONS SECUNDÁRIOS
+=========================== */
+.btn-danger {
+    background: #c62828 !important;
 }
+
+.btn-danger:hover {
+    background: #8e1c1c !important;
+}
+
+/* ===========================
+   ACCORDION
+=========================== */
+.accordion-section {
+    margin-top: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f1f3f5;
+    border: 1px solid #ccc;
+}
+
+.accordion-title {
+    padding: 12px;
+    background: #e1e5ea;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.accordion-title:hover {
+    background: #d3d7dd;
+}
+
+.accordion-content {
+    padding: 12px;
+    display: none;
+    background: white;
+}
+
+/* Checkbox estilo melhorado */
+input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.25);
+}
+
+/* ===========================
+   CORES DE CLASSIFICAÇÃO
+=========================== */
+.vermelho { border-left-color: #c62828 !important; }
+.laranja  { border-left-color: #ef6c00 !important; }
+.amarelo  { border-left-color: #fbc02d !important; }
+.verde    { border-left-color: #43a047 !important; }
+.azul     { border-left-color: #1e88e5 !important; }
