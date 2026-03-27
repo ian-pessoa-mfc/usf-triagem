@@ -177,6 +177,41 @@ input[type="checkbox"] {
    CORES DE CLASSIFICAÇÃO
 =========================== */
 .vermelho { border-left-color: #c62828 !important; }
+/* ======== ESTILO DO ACCORDION ======== */
+
+.accordion-section {
+    background: #f7f7f7;
+    border-radius: 8px;
+    margin: 15px 0;
+    padding: 10px;
+    border-left: 4px solid #004aad;
+}
+
+.accordion-title {
+    background: #004aad;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.accordion-title:hover {
+    background: #00337a;
+}
+
+.accordion-content {
+    background: white;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 8px;
+}
+
+.chk-sinal,
+.chk-risco {
+    margin-right: 6px;
+}
 .laranja  { border-left-color: #ef6c00 !important; }
 .amarelo  { border-left-color: #fbc02d !important; }
 .verde    { border-left-color: #43a047 !important; }
