@@ -10,22 +10,23 @@
         .accordion-section {
             background: #f0f0f0;
             padding: 10px;
-            margin-top: 10px;
-            border-radius: 6px;
+            margin-top: 15px;
+            border-radius: 8px;
         }
 
         .accordion-title {
-            font-weight: bold;
-            cursor: pointer;
-            padding: 10px;
-            background: #d9d9d9;
+            background: #004aad;
+            color: white;
+            padding: 12px;
             border-radius: 6px;
+            cursor: pointer;
         }
 
         .accordion-content {
             display: none;
-            padding: 10px;
-            background: white;
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 6px;
         }
     </style>
 </head>
@@ -55,7 +56,6 @@
 
         <!-- SELECT DE QUEIXAS -->
         <label>Queixa principal:</label>
-
         <select id="queixa" required>
             <option value="">Selecione...</option>
 
@@ -138,7 +138,7 @@
             </optgroup>
         </select>
 
-        <!-- CHECKLISTS INTELIGENTES OCULTOS -->
+        <!-- CHECKLISTS COMO ACCORDION -->
 
         <div id="chk_cefaleia" class="accordion-section" style="display:none;">
             <div class="accordion-title">Sinais de Alarme – Cefaleia</div>
@@ -164,7 +164,7 @@
         </div>
 
         <div id="chk_dispneia" class="accordion-section" style="display:none;">
-            <div class="accordion-title">Dispneia – Sinais de Alarme</div>
+            <div class="accordion-title">Dispneia – Alarmes</div>
             <div class="accordion-content">
                 <label><input type="checkbox" class="chk-sinal" value="tiragem"> Tiragem</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="taquipneia"> Respiração rápida</label><br>
@@ -281,10 +281,28 @@
 
 </main>
 
+<!-- SCRIPT DO ACCORDION -->
 <script>
+document.querySelectorAll(".accordion-title").forEach(title => {
+    title.addEventListener("click", () => {
+        const content = title.nextElementSibling;
+        const opened = content.style.display === "block";
+
+        document.querySelectorAll(".accordion-content")
+            .forEach(c => c.style.display = "none");
+
+        content.style.display = opened ? "none" : "block";
+    });
+});
+</script>
+
+<script>
+// Exibir checklist certo conforme a queixa
 function esconderTodosChecklists() {
-    const todos = document.querySelectorAll('[id^="chk_"]');
-    todos.forEach(div => div.style.display = "none");
+    document.querySelectorAll('[id^="chk_"]').forEach(div => {
+        div.style.display = "none";
+        div.querySelector(".accordion-content").style.display = "none";
+    });
 }
 
 document.getElementById("queixa").addEventListener("change", function () {
@@ -310,10 +328,9 @@ document.getElementById("queixa").addEventListener("change", function () {
         return;
     }
 
-    const idChecklist = "chk_" + q;
-    const elemento = document.getElementById(idChecklist);
-    if (elemento) {
-        elemento.style.display = "block";
+    const bloco = document.getElementById("chk_" + q);
+    if (bloco) {
+        bloco.style.display = "block";
     }
 });
 </script>
