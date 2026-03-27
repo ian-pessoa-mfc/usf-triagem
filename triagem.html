@@ -53,6 +53,7 @@
         <label>Idade:</label>
         <input type="number" id="idade" required>
 
+        <!-- SELECT DE QUEIXAS -->
         <label>Queixa principal:</label>
 
         <select id="queixa" required>
@@ -137,15 +138,12 @@
             </optgroup>
         </select>
 
-        <!-- =============================== -->
         <!-- CHECKLISTS INTELIGENTES OCULTOS -->
-        <!-- =============================== -->
 
-        <!-- CEFALÉIA -->
         <div id="chk_cefaleia" class="accordion-section" style="display:none;">
             <div class="accordion-title">Sinais de Alarme – Cefaleia</div>
             <div class="accordion-content">
-                <label><input type="checkbox" class="chk-sinal" value="cefaleia_trovoada"> Cefaleia súbita tipo “trovoada”</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="cefaleia_trovoada"> Cefaleia trovoada</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="rigidez_nuca"> Rigidez de nuca</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="deficit_neurologico"> Déficit neurológico</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="vomitos_repetidos"> Vômitos repetidos</label><br>
@@ -154,7 +152,6 @@
             </div>
         </div>
 
-        <!-- FEBRE -->
         <div id="chk_febre_respiratoria" class="accordion-section" style="display:none;">
             <div class="accordion-title">Sinais de Alarme – Febre</div>
             <div class="accordion-content">
@@ -166,21 +163,19 @@
             </div>
         </div>
 
-        <!-- DISPNEIA -->
         <div id="chk_dispneia" class="accordion-section" style="display:none;">
-            <div class="accordion-title">Sinais de Alarme – Dispneia</div>
+            <div class="accordion-title">Dispneia – Sinais de Alarme</div>
             <div class="accordion-content">
                 <label><input type="checkbox" class="chk-sinal" value="tiragem"> Tiragem</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="taquipneia"> Respiração rápida</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="cianose"> Cianose</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="saturacao_baixa"> Saturação < 94%</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="saturacao_baixa"> Saturação &lt; 94%</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="sibilos_intensos"> Sibilos intensos</label>
             </div>
         </div>
 
-        <!-- DOR ABDOMINAL -->
         <div id="chk_dor_abdominal" class="accordion-section" style="display:none;">
-            <div class="accordion-title">Sinais de Alarme – Dor Abdominal</div>
+            <div class="accordion-title">Dor Abdominal – Alarmes</div>
             <div class="accordion-content">
                 <label><input type="checkbox" class="chk-sinal" value="dor_intensa"> Dor intensa</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="abdome_rigido"> Abdome rígido</label><br>
@@ -190,20 +185,18 @@
             </div>
         </div>
 
-        <!-- VÔMITOS -->
         <div id="chk_vomito" class="accordion-section" style="display:none;">
-            <div class="accordion-title">Sinais de Alarme – Vômitos</div>
+            <div class="accordion-title">Vômitos – Alarmes</div>
             <div class="accordion-content">
-                <label><input type="checkbox" class="chk-sinal" value="vomitos_repetidos"> Vômitos repetidos</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="vomitos_repetidos"> Vômitos > 3h</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="desidratacao"> Desidratação</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="hematemese"> Sangue no vômito</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="sonolencia"> Sonolência</label>
             </div>
         </div>
 
-        <!-- DIARREIA -->
         <div id="chk_diarreia" class="accordion-section" style="display:none;">
-            <div class="accordion-title">Sinais de Alarme – Diarreia</div>
+            <div class="accordion-title">Diarreia – Alarmes</div>
             <div class="accordion-content">
                 <label><input type="checkbox" class="chk-sinal" value="sangue_fezes"> Sangue nas fezes</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="desidratacao"> Desidratação</label><br>
@@ -211,9 +204,8 @@
             </div>
         </div>
 
-        <!-- URINÁRIO -->
         <div id="chk_urinario" class="accordion-section" style="display:none;">
-            <div class="accordion-title">Sinais de Alarme – Urinário</div>
+            <div class="accordion-title">Urinário – Alarmes</div>
             <div class="accordion-content">
                 <label><input type="checkbox" class="chk-sinal" value="febre_alta"> Febre alta</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="dor_lombar_forte"> Dor lombar forte</label><br>
@@ -221,52 +213,53 @@
             </div>
         </div>
 
-        <!-- PEDIATRIA -->
         <div id="chk_febre_crianca" class="accordion-section" style="display:none;">
-            <div class="accordion-title">Sinais de Alarme – Criança Febril</div>
+            <div class="accordion-title">Criança Febril – Alarmes</div>
             <div class="accordion-content">
-                <label><input type="checkbox" class="chk-sinal" value="irritabilidade_intensa"> Irritabilidade intensa</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="irritabilidade_intensa"> Irritabilidade</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="letargia"> Letargia</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="recusa_seio"> Recusa alimentar</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="petequias"> Petéquias</label>
             </div>
         </div>
 
-        <!-- DOR TORÁCICA LEVE -->
         <div id="chk_dor_toracica_leve" class="accordion-section" style="display:none;">
-            <div class="accordion-title">Sinais de Alarme – Dor Torácica</div>
+            <div class="accordion-title">Dor Torácica – Alarmes</div>
             <div class="accordion-content">
                 <label><input type="checkbox" class="chk-sinal" value="dispneia"> Falta de ar</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="sudorese"> Sudorese fria</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="sudorese"> Sudorese</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="palidez"> Palidez</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="irradiacao"> Dor irradiada</label>
             </div>
         </div>
 
-        <!-- TONTURA -->
         <div id="chk_tontura" class="accordion-section" style="display:none;">
-            <div class="accordion-title">Sinais de Alarme – Tontura</div>
+            <div class="accordion-title">Tontura – Alarmes</div>
             <div class="accordion-content">
                 <label><input type="checkbox" class="chk-sinal" value="sincopal"> Quase síncope</label><br>
                 <label><input type="checkbox" class="chk-sinal" value="fraqueza_lateralizada"> Fraqueza unilateral</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="palpitacoes"> Palpitações fortes</label>
+                <label><input type="checkbox" class="chk-sinal" value="palpitacoes"> Palpitações</label>
             </div>
         </div>
 
-        <!-- TRAUMA LEVE -->
         <div id="chk_trauma_leve" class="accordion-section" style="display:none;">
-            <div class="accordion-title">Sinais de Alarme – Trauma</div>
+            <div class="accordion-title">Trauma – Alarmes</div>
             <div class="accordion-content">
                 <label><input type="checkbox" class="chk-sinal" value="dor_intensa"> Dor intensa</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="incapacidade_apoio"> Incapacidade de apoiar peso</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="hematoma_extenso"> Hematoma extenso</label>
+                <label><input type="checkbox" class="chk-sinal" value="incapacidade_apoio"> Não apoia peso</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="hematoma_extenso"> Hematoma grande</label>
             </div>
         </div>
 
+        <!-- Fatores de risco -->
+        <h3>Fatores de Risco</h3>
 
-        <!-- =========================== -->
-        <!-- SINAIS VITAIS               -->
-        <!-- =========================== -->
+        <label><input type="checkbox" class="chk-risco" value="idoso"> Idoso</label><br>
+        <label><input type="checkbox" class="chk-risco" value="criança"> Criança</label><br>
+        <label><input type="checkbox" class="chk-risco" value="gestante"> Gestante</label><br>
+        <label><input type="checkbox" class="chk-risco" value="diabetes"> Diabetes</label><br>
+        <label><input type="checkbox" class="chk-risco" value="hipertensão"> Hipertensão</label><br>
+        <label><input type="checkbox" class="chk-risco" value="asma"> Asma</label><br>
 
         <label>Temperatura (°C):</label>
         <input type="number" id="temperatura" step="0.1" required>
@@ -288,7 +281,6 @@
 
 </main>
 
-<!-- SCRIPT QUE EXIBE O CHECKLIST CERTO -->
 <script>
 function esconderTodosChecklists() {
     const todos = document.querySelectorAll('[id^="chk_"]');
