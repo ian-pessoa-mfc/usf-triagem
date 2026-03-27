@@ -53,10 +53,6 @@
         <label>Idade:</label>
         <input type="number" id="idade" required>
 
-        <!-- ======================= -->
-        <!-- NOVO SELECT DE QUEIXAS -->
-        <!-- ======================= -->
-
         <label>Queixa principal:</label>
 
         <select id="queixa" required>
@@ -106,7 +102,7 @@
                 <option value="disuria">Dor ao urinar</option>
                 <option value="polaciuria">Urinar muitas vezes</option>
                 <option value="lombalgia">Dor lombar</option>
-                <option value="hematúria">Urina com sangue</option>
+                <option value="hematuria">Urina com sangue</option>
             </optgroup>
 
             <optgroup label="🧴 Dermatológicas">
@@ -140,83 +136,3 @@
                 <option value="outros">Outros</option>
             </optgroup>
         </select>
-
-        <!-- REMOVEI “detalhes da queixa” porque não existe mais texto livre -->
-
-        <h3>Sinais de Alarme</h3>
-
-        <!-- Mantive SEU CHECKLIST ATUAL sem mexer -->
-        <div class="accordion-section">
-            <div class="accordion-title">Respiração</div>
-            <div class="accordion-content">
-                <label><input type="checkbox" class="chk-sinal" value="dispneia moderada"> Dispneia moderada</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="dispneia grave"> Dispneia grave</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="tiragem"> Tiragem</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="cianose"> Cianose</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="estridor"> Estridor</label>
-            </div>
-        </div>
-
-        <div class="accordion-section">
-            <div class="accordion-title">Neurológico</div>
-            <div class="accordion-content">
-                <label><input type="checkbox" class="chk-sinal" value="sonolencia"> Sonolência</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="rebaixamento"> Rebaixamento de consciência</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="confusao"> Confusão</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="convulsao"> Convulsão</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="rigidez de nuca"> Rigidez de nuca</label>
-            </div>
-        </div>
-
-        <div class="accordion-section">
-            <div class="accordion-title">Circulação / Dor</div>
-            <div class="accordion-content">
-                <label><input type="checkbox" class="chk-sinal" value="dor toracica moderada"> Dor torácica moderada</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="dor toracica intensa"> Dor torácica intensa</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="pulso fraco"> Pulso fraco</label><br>
-                <label><input type="checkbox" class="chk-sinal" value="hemorragia ativa"> Hemorragia ativa</label>
-            </div>
-        </div>
-
-        <h3>Fatores de Risco</h3>
-
-        <label><input type="checkbox" class="chk-risco" value="idoso"> Idoso</label><br>
-        <label><input type="checkbox" class="chk-risco" value="criança"> Criança</label><br>
-        <label><input type="checkbox" class="chk-risco" value="gestante"> Gestante</label><br>
-        <label><input type="checkbox" class="chk-risco" value="diabetes"> Diabetes</label><br>
-        <label><input type="checkbox" class="chk-risco" value="hipertensão"> Hipertensão</label><br>
-        <label><input type="checkbox" class="chk-risco" value="asma"> Asma</label><br>
-
-        <label>Temperatura (°C):</label>
-        <input type="number" id="temperatura" step="0.1" required>
-
-        <label>Pressão arterial:</label>
-        <input type="text" id="pressao" placeholder="Ex: 120/80" required>
-
-        <label>Saturação (%):</label>
-        <input type="number" id="saturacao" required>
-
-        <label>Batimentos cardíacos (bpm):</label>
-        <input type="number" id="batimentos" required>
-
-        <button type="submit">Processar Triagem</button>
-
-    </form>
-
-    <div id="resultadoTriagem" style="margin-top: 30px;"></div>
-
-</main>
-
-<script>
-    document.querySelectorAll(".accordion-title").forEach(title => {
-        title.addEventListener("click", () => {
-            const content = title.nextElementSibling;
-            content.style.display = content.style.display === "block" ? "none" : "block";
-        });
-    });
-</script>
-
-<script src="assets/js/triagem.js"></script>
-
-</body>
-</html>
