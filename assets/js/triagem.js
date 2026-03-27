@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Se estiver na página de triagem.html
     const form = document.getElementById("formTriagem");
+
     if (form) {
         form.addEventListener("submit", function (e) {
             e.preventDefault();
@@ -16,13 +17,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Processa os dados do formulário
 function processarTriagem() {
+
     const nome = document.getElementById("nome").value;
     const idade = parseInt(document.getElementById("idade").value);
     const temperatura = parseFloat(document.getElementById("temperatura").value);
     const pressao = document.getElementById("pressao").value;
     const saturacao = parseInt(document.getElementById("saturacao").value);
     const batimentos = parseInt(document.getElementById("batimentos").value);
-    const prioridade = calcularPrioridade(temperatura, pressao, saturacao, batimentos);
+
+    // Por enquanto, ainda não existem campos de queixa/checklist/riscos no HTML.
+    const queixa = "";         
+    const checklistMarcado = [];   
+    const riscosMarcados = [];
+
+    const vitais = { temperatura, pressao, saturacao, batimentos };
+
+    const prioridade = definirPrioridade(
+        queixa,
+        checklistMarcado,
+        riscosMarcados,
+        vitais
+    );
 
     const dadosTriagem = {
         nome,
@@ -37,20 +52,6 @@ function processarTriagem() {
 
     salvarTriagem(dadosTriagem);
     mostrarResultado(dadosTriagem);
-}
-
-// Cálculo simplificado de prioridade
-function calcularPrioridade(temp, pressao, sat, bpm) {
-
-    if (temp >= 39 || sat < 90 || bpm > 140) {
-        return "VERMELHO (Emergência)";
-    }
-
-    if (temp >= 38 || sat < 94 || bpm > 120) {
-        return "AMARELO (Urgência)";
-    }
-
-    return "VERDE (Rotina)";
 }
 
 // Salva a triagem no navegador
@@ -75,7 +76,6 @@ function mostrarResultado(dados) {
         <p><strong>Batimentos:</strong> ${dados.batimentos} bpm</p>
         <p><strong>Classificação:</strong> ${dados.prioridade}</p>
         <p><strong>Data:</strong> ${dados.data}</p>
-
         <br>
         <a href="triagens.html">
             <button>Ver todas as triagens</button>
@@ -113,12 +113,14 @@ function carregarTriagens() {
         box.appendChild(div);
     });
 }
+
 // ==============================
 // ALGORITMO DE TRIAGEM AVANÇADA
 // ==============================
 
 // Detecta emergências diretas pela queixa ou checklist
 function detectarEmergencia(queixa, checklist) {
+
     const emergenciasDiretas = [
         "convulsão", "convulsao", "dor torácica intensa", "dor no peito",
         "dispneia grave", "falta de ar grave", "inconsciência", "desmaio",
@@ -140,6 +142,7 @@ function detectarEmergencia(queixa, checklist) {
 
 // Soma pontos com base no checklist
 function calcularScoreChecklist(checklist) {
+
     let score = 0;
 
     const pesos = {
@@ -174,6 +177,7 @@ function calcularScoreChecklist(checklist) {
 
 // Pontos extras para fatores de risco
 function calcularScoreRisco(riscos) {
+
     let score = 0;
 
     const pesosRisco = {
@@ -200,6 +204,7 @@ function calcularScoreRisco(riscos) {
 
 // Pontuação baseada nos sinais vitais
 function avaliarSinaisVitais(v) {
+
     let score = 0;
 
     if (v.temperatura >= 39) score += 3;
@@ -219,7 +224,7 @@ function avaliarSinaisVitais(v) {
     return score;
 }
 
-// Função final que decide a cor
+// Função final que define a prioridade
 function definirPrioridade(queixa, checklist, riscos, vitais) {
 
     if (detectarEmergencia(queixa, checklist)) {
