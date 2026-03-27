@@ -1,111 +1,53 @@
-// Função principal da triagem
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("formTriagem");
-    if (form) {
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            processarTriagem();
-        });
-    }
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Triagem</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
 
-    carregarTriagens();
-});
+<header>
+    <h1>Sistema de Triagem</h1>
 
-// Processa os dados do formulário
-function processarTriagem() {
-    const nome = document.getElementById("nome").value;
-    const idade = parseInt(document.getElementById("idade").value);
-    const temperatura = parseFloat(document.getElementById("temperatura").value);
-    const pressao = document.getElementById("pressao").value;
-    const saturacao = parseInt(document.getElementById("saturacao").value);
-    const batimentos = parseInt(document.getElementById("batimentos").value);
-    const prioridade = calcularPrioridade(temperatura, pressao, saturacao, batimentos);
+    <nav>
+        <a href="index.html">Início</a>
+        <a href="triagem.html">Nova Triagem</a>
+        <a href="triagens.html">Triagens Registradas</a>
+    </nav>
+</header>
 
-    const dadosTriagem = {
-        nome,
-        idade,
-        temperatura,
-        pressao,
-        saturacao,
-        batimentos,
-        prioridade,
-        data: new Date().toLocaleString()
-    };
+<main>
+    <h2>Realizar triagem</h2>
 
-    salvarTriagem(dadosTriagem);
-    mostrarResultado(dadosTriagem);
-}
+    <form id="formTriagem">
 
-// Cálculo simplificado de prioridade (protocolo básico)
-function calcularPrioridade(temp, pressao, sat, bpm) {
+        <label>Nome do paciente:</label>
+        <input type="text" id="nome" required>
 
-    if (temp >= 39 || sat < 90 || bpm > 140) {
-        return "VERMELHO (Emergência)";
-    }
+        <label>Idade:</label>
+        <input type="number" id="idade" required>
 
-    if (temp >= 38 || sat < 94 || bpm > 120) {
-        return "AMARELO (Urgência)";
-    }
+        <label>Temperatura (°C):</label>
+        <input type="number" id="temperatura" step="0.1" required>
 
-    return "VERDE (Rotina)";
-}
+        <label>Pressão arterial:</label>
+        <input type="text" id="pressao" placeholder="Ex: 12x8" required>
 
-// Salva a triagem no navegador
-function salvarTriagem(dados) {
-    let lista = JSON.parse(localStorage.getItem("triagens")) || [];
-    lista.push(dados);
-    localStorage.setItem("triagens", JSON.stringify(lista));
-}
+        <label>Saturação (%):</label>
+        <input type="number" id="saturacao" required>
 
-// Mostra o resultado imediatamente na tela
-function mostrarResultado(dados) {
-    const box = document.getElementById("resultadoTriagem");
+        <label>Batimentos cardíacos (bpm):</label>
+        <input type="number" id="batimentos" required>
 
-    if (!box) return;
+        <button type="submit">Processar Triagem</button>
+    </form>
 
-    box.innerHTML = `
-        <h3>Triagem concluída</h3>
-        <p><strong>Nome:</strong> ${dados.nome}</p>
-        <p><strong>Idade:</strong> ${dados.idade}</p>
-        <p><strong>Temperatura:</strong> ${dados.temperatura}°C</p>
-        <p><strong>Pressão:</strong> ${dados.pressao}</p>
-        <p><strong>Saturação:</strong> ${dados.saturacao}%</p>
-        <p><strong>Batimentos:</strong> ${dados.batimentos} bpm</p>
-        <p><strong>Classificação:</strong> ${dados.prioridade}</p>
-        <p><strong>Data:</strong> ${dados.data}</p>
+    <div id="resultadoTriagem" style="margin-top: 30px;"></div>
+</main>
 
-        <br>
-        <a href="triagens.html">
-            <button>Ver todas as triagens</button>
-        </a>
-    `;
-}
+<script src="assets/js/triagem.js"></script>
+<script src="assets/js/ui.js"></script>
 
-// Carrega triagens já salvas (triagens.html)
-function carregarTriagens() {
-    const lista = JSON.parse(localStorage.getItem("triagens")) || [];
-    const box = document.getElementById("listaTriagens");
-
-    if (!box) return;
-
-    if (lista.length === 0) {
-        box.innerHTML = "<p>Nenhuma triagem registrada ainda.</p>";
-        return;
-    }
-
-    lista.forEach(t => {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `
-            <h3>${t.nome}</h3>
-            <p><strong>Idade:</strong> ${t.idade}</p>
-            <p><strong>Temp:</strong> ${t.temperatura}°C</p>
-            <p><strong>Saturação:</strong> ${t.saturacao}%</p>
-            <p><strong>Bat:</strong> ${t.batimentos} bpm</p>
-            <p><strong>Pressão:</strong> ${t.pressao}</p>
-            <p><strong>Classificação:</strong> ${t.prioridade}</p>
-            <p><em>${t.data}</em></p>
-        `;
-        box.appendChild(div);
-    });
-}
+</body>
+</html>
