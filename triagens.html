@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Triagens Registradas</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>Triagens Registradas</h1>
+    <p>Lista de atendimentos já realizados</p>
+</header>
+
+<main>
+    <div id="lista-triagens"></div>
+
+    <button id="btn-apagar" style="margin-top:20px;background:#c40000;">
+        Apagar Todas as Triagens
+    </button>
+
+    <button id="btn-voltar" style="margin-top:10px;background:#005baa;">
+        Voltar para a Triagem
+    </button>
+</main>
+
+<script>
+    function carregarTriagens() {
+        const lista = document.getElementById("lista-triagens");
+        const triagens = JSON.parse(localStorage.getItem("triagens")) || [];
+
+        if (triagens.length === 0) {
+            lista.innerHTML = "<p>Nenhuma triagem registrada ainda.</p>";
+            return;
+        }
+
+        let html = "";
+
+        triagens.forEach((t, i) => {
+            html += `
+                <div style="
+                    background:white;
+                    margin-bottom:15px;
+                    padding:15px;
+                    border-radius:12px;
+                    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+                ">
+                    <h2>Paciente ${i + 1}</h2>
+                    <p><strong>Classificação:</strong> ${t.classificacao}</p>
+                    <p><strong>Data/Hora:</strong> ${t.data} - ${t.hora}</p>
+                    <p><strong>Idade:</strong> ${t.paciente.idade}</p>
+                    <p><strong>Queixa:</strong> ${t.paciente.queixa}</p>
+                    <p><strong>Comorbidades:</strong> ${t.paciente.comorbidades.join(", ")}</p>
+                    <p><strong>Medicações:</strong> ${t.paciente.medicacoes}</p>
+                    <p><strong>PA:</strong> ${t.paciente.pa}</p>
+                    <p><strong>FC:</strong> ${t.paciente.fc}</p>
+                    <p><strong>FR:</strong> ${t.paciente.fr}</p>
+                    <p><strong>SpO₂:</strong> ${t.paciente.spo2}%</p>
+                    <p><strong>Temperatura:</strong> ${t.paciente.temp} °C</p>
+                </div>
+            `;
+        });
+
+        lista.innerHTML = html;
+    }
+
+    document.getElementById("btn-voltar").addEventListener("click", () => {
+        window.location.href = "triagem.html";
+    });
+
+    document.getElementById("btn-apagar").addEventListener("click", () => {
+        localStorage.removeItem("triagens");
+        window.location.reload();
+    });
+
+    carregarTriagens();
+</script>
+
+</body>
+</html>
