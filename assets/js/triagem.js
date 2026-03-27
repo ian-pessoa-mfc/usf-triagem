@@ -113,3 +113,128 @@ function carregarTriagens() {
         box.appendChild(div);
     });
 }
+// ==============================
+// ALGORITMO DE TRIAGEM AVANÇADA
+// ==============================
+
+// Detecta emergências diretas pela queixa ou checklist
+function detectarEmergencia(queixa, checklist) {
+    const emergenciasDiretas = [
+        "convulsão", "convulsao", "dor torácica intensa", "dor no peito",
+        "dispneia grave", "falta de ar grave", "inconsciência", "desmaio",
+        "hemorragia ativa", "suspeita de avc", "rigidez de nuca",
+        "febre com petéquias", "petequias", "cianose"
+    ];
+
+    const texto = queixa.toLowerCase();
+    if (emergenciasDiretas.some(e => texto.includes(e))) return true;
+
+    const itensEmergencia = [
+        "tiragem", "incapacidade de falar", "cianose", "rigidez de nuca",
+        "hemorragia ativa", "desmaio", "convulsão", "pulso fraco",
+        "dor torácica forte"
+    ];
+
+    return checklist.some(item => itensEmergencia.includes(item.toLowerCase()));
+}
+
+// Soma pontos com base no checklist
+function calcularScoreChecklist(checklist) {
+    let score = 0;
+
+    const pesos = {
+        "dispneia moderada": 3,
+        "dispneia grave": 6,
+        "tiragem": 8,
+        "estridor": 8,
+        "cianose": 10,
+        "rigidez de nuca": 10,
+        "sonolência": 4,
+        "rebaixamento": 7,
+        "confusão": 5,
+        "convulsão": 12,
+        "dor torácica moderada": 6,
+        "dor torácica intensa": 10,
+        "febre alta": 3,
+        "vômitos repetidos": 3,
+        "diarreia intensa": 3,
+        "desidratação": 4,
+        "criança hipoativa": 6,
+        "sangramento vaginal": 6,
+        "cefaleia intensa": 6
+    };
+
+    checklist.forEach(item => {
+        const chave = item.toLowerCase();
+        if (pesos[chave]) score += pesos[chave];
+    });
+
+    return score;
+}
+
+// Pontos extras para fatores de risco
+function calcularScoreRisco(riscos) {
+    let score = 0;
+
+    const pesosRisco = {
+        "idoso": 2,
+        "criança": 2,
+        "gestante": 2,
+        "diabetes": 2,
+        "hipertensão": 1,
+        "asma": 1,
+        "dpoc": 1,
+        "doença cardíaca": 2,
+        "imunossuprimido": 3,
+        "corticoide": 1,
+        "anticoagulante": 2
+    };
+
+    riscos.forEach(r => {
+        const chave = r.toLowerCase();
+        if (pesosRisco[chave]) score += pesosRisco[chave];
+    });
+
+    return score;
+}
+
+// Pontuação baseada nos sinais vitais
+function avaliarSinaisVitais(v) {
+    let score = 0;
+
+    if (v.temperatura >= 39) score += 3;
+    if (v.temperatura <= 35) score += 4;
+
+    if (v.saturacao < 90) score += 8;
+    else if (v.saturacao < 94) score += 4;
+
+    if (v.batimentos > 140) score += 6;
+    else if (v.batimentos > 120) score += 3;
+
+    const [pas, pad] = v.pressao.split("/").map(Number);
+
+    if (pas < 90 || pad < 60) score += 6;
+    if (pas > 180 || pad > 110) score += 4;
+
+    return score;
+}
+
+// Função final que decide a cor
+function definirPrioridade(queixa, checklist, riscos, vitais) {
+
+    if (detectarEmergencia(queixa, checklist)) {
+        return "VERMELHO (Emergência)";
+    }
+
+    let score = 0;
+
+    score += calcularScoreChecklist(checklist);
+    score += calcularScoreRisco(riscos);
+    score += avaliarSinaisVitais(vitais);
+
+    if (score >= 18) return "LARANJA (Urgência Grave)";
+    if (score >= 10) return "AMARELO (Urgência)";
+    if (score >= 4) return "VERDE (Rotina)";
+
+    return "AZUL (Baixa Complexidade)";
+}
