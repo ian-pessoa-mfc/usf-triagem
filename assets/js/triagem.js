@@ -1,5 +1,7 @@
 // Função principal da triagem
 document.addEventListener("DOMContentLoaded", function () {
+
+    // Se estiver na página de triagem.html
     const form = document.getElementById("formTriagem");
     if (form) {
         form.addEventListener("submit", function (e) {
@@ -8,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Se estiver na página triagens.html
     carregarTriagens();
 });
 
@@ -36,7 +39,7 @@ function processarTriagem() {
     mostrarResultado(dadosTriagem);
 }
 
-// Cálculo simplificado de prioridade (protocolo básico)
+// Cálculo simplificado de prioridade
 function calcularPrioridade(temp, pressao, sat, bpm) {
 
     if (temp >= 39 || sat < 90 || bpm > 140) {
@@ -57,10 +60,9 @@ function salvarTriagem(dados) {
     localStorage.setItem("triagens", JSON.stringify(lista));
 }
 
-// Mostra o resultado imediatamente na tela
+// Mostra o resultado na página de triagem.html
 function mostrarResultado(dados) {
     const box = document.getElementById("resultadoTriagem");
-
     if (!box) return;
 
     box.innerHTML = `
@@ -83,10 +85,10 @@ function mostrarResultado(dados) {
 
 // Carrega triagens já salvas (triagens.html)
 function carregarTriagens() {
-    const lista = JSON.parse(localStorage.getItem("triagens")) || [];
     const box = document.getElementById("listaTriagens");
-
     if (!box) return;
+
+    const lista = JSON.parse(localStorage.getItem("triagens")) || [];
 
     if (lista.length === 0) {
         box.innerHTML = "<p>Nenhuma triagem registrada ainda.</p>";
@@ -96,16 +98,18 @@ function carregarTriagens() {
     lista.forEach(t => {
         const div = document.createElement("div");
         div.className = "card";
+
         div.innerHTML = `
             <h3>${t.nome}</h3>
             <p><strong>Idade:</strong> ${t.idade}</p>
-            <p><strong>Temp:</strong> ${t.temperatura}°C</p>
+            <p><strong>Temperatura:</strong> ${t.temperatura}°C</p>
             <p><strong>Saturação:</strong> ${t.saturacao}%</p>
-            <p><strong>Bat:</strong> ${t.batimentos} bpm</p>
+            <p><strong>Batimentos:</strong> ${t.batimentos} bpm</p>
             <p><strong>Pressão:</strong> ${t.pressao}</p>
             <p><strong>Classificação:</strong> ${t.prioridade}</p>
             <p><em>${t.data}</em></p>
         `;
+
         box.appendChild(div);
     });
 }
