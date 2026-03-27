@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Triagem</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Accordion básico */
+        .accordion-section {
+            background: #f0f0f0;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        .accordion-title {
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px;
+            background: #d9d9d9;
+            border-radius: 6px;
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 10px;
+            background: white;
+        }
+    </style>
 </head>
+
 <body>
 
 <header>
     <h1>Sistema de Triagem</h1>
-
     <nav>
         <a href="index.html">Início</a>
         <a href="triagem.html">Nova Triagem</a>
@@ -18,21 +42,81 @@
 </header>
 
 <main>
+
     <h2>Realizar triagem</h2>
 
     <form id="formTriagem">
 
+        <!-- Dados básicos -->
         <label>Nome do paciente:</label>
         <input type="text" id="nome" required>
 
         <label>Idade:</label>
         <input type="number" id="idade" required>
 
+        <!-- ====== NOVOS CAMPOS ====== -->
+
+        <label>Queixa principal:</label>
+        <input type="text" id="queixa" placeholder="Ex: febre, dor abdominal, tosse..." required>
+
+        <label>Detalhes da queixa:</label>
+        <textarea id="detalhesQueixa" rows="3" placeholder="Descreva detalhes importantes"></textarea>
+
+        <!-- CHECKLIST EM ACCORDION -->
+        <h3>Sinais de Alarme</h3>
+
+        <!-- Respiração -->
+        <div class="accordion-section">
+            <div class="accordion-title">Respiração</div>
+            <div class="accordion-content">
+                <label><input type="checkbox" class="chk-sinal" value="dispneia moderada"> Dispneia moderada</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="dispneia grave"> Dispneia grave</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="tiragem"> Tiragem</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="cianose"> Cianose</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="estridor"> Estridor</label>
+            </div>
+        </div>
+
+        <!-- Neurológico -->
+        <div class="accordion-section">
+            <div class="accordion-title">Neurológico</div>
+            <div class="accordion-content">
+                <label><input type="checkbox" class="chk-sinal" value="sonolência"> Sonolência anormal</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="rebaixamento"> Rebaixamento de consciência</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="confusão"> Confusão mental</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="convulsão"> Convulsão</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="rigidez de nuca"> Rigidez de nuca</label>
+            </div>
+        </div>
+
+        <!-- Circulação -->
+        <div class="accordion-section">
+            <div class="accordion-title">Circulação / Dor</div>
+            <div class="accordion-content">
+                <label><input type="checkbox" class="chk-sinal" value="dor torácica moderada"> Dor torácica moderada</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="dor torácica intensa"> Dor torácica intensa</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="pulso fraco"> Pulso fraco</label><br>
+                <label><input type="checkbox" class="chk-sinal" value="hemorragia ativa"> Hemorragia ativa</label>
+            </div>
+        </div>
+
+        <!-- Fatores de risco -->
+        <h3>Fatores de Risco</h3>
+
+        <label><input type="checkbox" class="chk-risco" value="idoso"> Idoso</label><br>
+        <label><input type="checkbox" class="chk-risco" value="criança"> Criança</label><br>
+        <label><input type="checkbox" class="chk-risco" value="gestante"> Gestante</label><br>
+        <label><input type="checkbox" class="chk-risco" value="diabetes"> Diabetes</label><br>
+        <label><input type="checkbox" class="chk-risco" value="hipertensão"> Hipertensão</label><br>
+        <label><input type="checkbox" class="chk-risco" value="asma"> Asma</label><br>
+        <label><input type="checkbox" class="chk-risco" value="dpoc"> DPOC</label><br>
+
+        <!-- SINAIS VITAIS (originais) -->
         <label>Temperatura (°C):</label>
         <input type="number" id="temperatura" step="0.1" required>
 
         <label>Pressão arterial:</label>
-        <input type="text" id="pressao" placeholder="Ex: 12x8" required>
+        <input type="text" id="pressao" placeholder="Ex: 120/80" required>
 
         <label>Saturação (%):</label>
         <input type="number" id="saturacao" required>
@@ -44,7 +128,19 @@
     </form>
 
     <div id="resultadoTriagem" style="margin-top: 30px;"></div>
+
 </main>
 
+<script>
+    document.querySelectorAll(".accordion-title").forEach(title => {
+        title.addEventListener("click", () => {
+            const content = title.nextElementSibling;
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        });
+    });
+</script>
+
 <script src="assets/js/triagem.js"></script>
-<script src="asset
+
+</body>
+</html>
